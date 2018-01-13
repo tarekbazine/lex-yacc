@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-
+#include <string.h>
 
 int Index=0;
 int temp_var=0;
@@ -40,6 +40,7 @@ int top;
 
 %token  <val> NOMBRE
 %token <string> ID
+%token MOY VARIANCE MIN MAX SOMME SI
 
 %left '+'  '-'
 %left '*'  '/'
@@ -72,7 +73,96 @@ E:	ID	{char temp[10];
 				 }
   //| E PUISSANCE E { $$=pow($1,$3); }
   | '(' E ')'  {}
+  |	F
   ;
+
+F : SOMME '(' L ')' { 
+
+if(Stk.top > 0){
+
+for(int i=0;i<Stk.top+1;i++){
+printf("\n %s",Stk.items[i]);
+}
+
+while(Stk.top > 0){
+
+char *src1=(char *)malloc(strlen(Stk.items[Stk.top])+1);
+strcpy(src1,Stk.items[Stk.top]);
+Stk.top--;
+
+/*char *src2=(char *)malloc(strlen(Stk.items[Stk.top])+1);
+strcpy(src2,Stk.items[Stk.top]);
+Stk.top--;*/
+
+generer_Quadruplet("+",src1,pop(),src1);  
+push(src1);
+
+}
+
+
+}//else ya93ad f stack
+
+/*
+
+int i;
+	if(Stk.top==-1)
+	{
+	printf("\nStack Empty!! \n");
+	exit(0);
+	}
+	char *str=(char *)malloc(strlen(Stk.items[Stk.top])+1);
+	strcpy(str,Stk.items[Stk.top]);
+	Stk.top--;
+	return(str);
+
+
+traiter("+");
+
+
+char str[7],str1[7]="tmp";
+	sprintf(str, "%d", temp_var);    
+	strcat(str1,str);
+	temp_var++;
+	generer_Quadruplet(op,pop(),pop(),str1);  
+	push(str1);
+
+*/
+/*
+				float som = 0;
+				for(int i=0;i<$3.size;i++){
+					som = som + $3.vals[i];
+				}
+				$$ = som ; */
+			}
+;
+
+L : L ',' E {
+
+/*char str[7],str1[7]="tmp";
+	sprintf(str, "%d", temp_var-1);    
+	strcat(str1,str);
+
+	//generer_Quadruplet(op,pop(),pop(),str1);  
+	push(str1);*/
+
+	/*printf("bfffLIST : %f  size: %d\n",$3,$$.size);
+	$$.vals[$$.size] = $3; 
+	$$.size++;*/
+//	printf("AdddLIST : %f size: %d vallist %f\n\n",$3,$$.size,$$.vals[0]); 
+ }
+| E { 
+	/*char str[7],str1[7]="tmp";
+	sprintf(str, "%d", temp_var-1);    
+	strcat(str1,str);
+
+	//generer_Quadruplet(op,pop(),pop(),str1);  
+	push(str1);*/
+/*	printf("Bfff : %f  size: %d\n",$1,$$.size);
+	$$.vals[$$.size] = $1; 
+	$$.size++;*/
+//	printf("Addd : %f size: %d\n\n",$1,$$.size);
+ }
+;
 
 %%
 

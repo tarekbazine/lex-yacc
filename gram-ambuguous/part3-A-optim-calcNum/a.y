@@ -50,28 +50,26 @@ int top;
 
 
 
-Ligne: E '\n'    {return;}
+Ligne: E '\n'    { printf("Resultat : %f\n",$1); return;}
   ;
 
-E:	ID	{char temp[10];
-                snprintf(temp,10,"%s",$1);    
-        	push(temp);}
-  | NOMBRE      { char temp[10];
+E:
+    NOMBRE      { $$=$1; char temp[10];
                 snprintf(temp,10,"%f",$1);    
         	push(temp);}
-  | E '+' E  { traiter("+");}
-  | E '-' E { traiter("-");}
-  | E '*' E  { traiter("*");}
-  | E '/' E  { traiter("/"); }
+  | E '+' E  { traiter("+");$$=$1+$3;}
+  | E '-' E { traiter("-");$$=$1-$3;}
+  | E '*' E  { traiter("*");$$=$1*$3;}
+  | E '/' E  { traiter("/");$$=$1/$3; }
   | '-' E %prec moins_unaire  { char str[7],str1[7]="tmp";
 				sprintf(str, "%d", temp_var);    
 				strcat(str1,str);
 				temp_var++;
 				generer_Quadruplet("NEG","",pop(),str1);  
 				push(str1);
-				 }
+				$$=-$2; }
   //| E PUISSANCE E { $$=pow($1,$3); }
-  | '(' E ')'  {}
+  | '(' E ')'  { $$=$2; }
   ;
 
 %%
