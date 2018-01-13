@@ -23,10 +23,14 @@ reel	  {entier}\.{entier}
       return(NOMBRE);
     }
 
-
 {reel}    {
       yylval.val =atof(yytext);
       return(NOMBRE);
     }
+
+[a-zA-Z_][a-zA-Z0-9_]*    {
+	strcpy(yylval.string,yytext);
+	return ID; 
+	}
 
 [\+\-\*\/\)\(\n]   return(yytext[0]);

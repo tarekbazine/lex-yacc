@@ -35,39 +35,43 @@ int top;
 		int size;
 	} valTab;  
 	float  val;
+        char string[10];
 } 
 
 %token  <val> NOMBRE
+%token <string> ID
 
 %left '+'  '-'
 %left '*'  '/'
 %right moins_unaire
 
-%type <val> Expression
+%type <val> E
 %%
 
 
 
-Ligne: Expression '\n'    { printf("Resultat : %f\n",$1); return;}
+Ligne: E '\n'    {return;}
   ;
 
-Expression:
-    NOMBRE      { $$=$1; char temp[10];
+E:	ID	{char temp[10];
+                snprintf(temp,10,"%s",$1);    
+        	push(temp);}
+  | NOMBRE      { char temp[10];
                 snprintf(temp,10,"%f",$1);    
         	push(temp);}
-  | Expression '+' Expression  { traiter("+");$$=$1+$3;}
-  | Expression '-' Expression { traiter("-");$$=$1-$3;}
-  | Expression '*' Expression  { traiter("*");$$=$1*$3;}
-  | Expression '/' Expression  { traiter("/");$$=$1/$3; }
-  | '-' Expression %prec moins_unaire  { char str[7],str1[7]="tmp";
-					sprintf(str, "%d", temp_var);    
-					strcat(str1,str);
-					temp_var++;
-					generer_Quadruplet("NEG","",pop(),str1);  
-					push(str1);
-					$$=-$2; }
-  //| Expression PUISSANCE Expression { $$=pow($1,$3); }
-  | '(' Expression ')'  { $$=$2; }
+  | E '+' E  { traiter("+");}
+  | E '-' E { traiter("-");}
+  | E '*' E  { traiter("*");}
+  | E '/' E  { traiter("/"); }
+  | '-' E %prec moins_unaire  { char str[7],str1[7]="tmp";
+				sprintf(str, "%d", temp_var);    
+				strcat(str1,str);
+				temp_var++;
+				generer_Quadruplet("NEG","",pop(),str1);  
+				push(str1);
+				 }
+  //| E PUISSANCE E { $$=pow($1,$3); }
+  | '(' E ')'  {}
   ;
 
 %%
@@ -80,7 +84,7 @@ int main(void) {
 	yyparse();
 
 	printf("\n\n");
-	afficher_Quadruple();
+	afficher_Quadruplet();
 	printf("\n\n");
 	afficher_simplifie();
 	printf("\n\n");
@@ -95,7 +99,7 @@ void traiter(char op[5]){
 	push(str1);
 }
 
-void afficher_Quadruple()
+void afficher_Quadruplet()
 {
 	int i;
 	printf("\n\n****** CODE INTERMEDAIRE ****** \n");

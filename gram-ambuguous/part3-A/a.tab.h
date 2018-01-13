@@ -46,7 +46,8 @@ extern int yydebug;
   enum yytokentype
   {
     NOMBRE = 258,
-    moins_unaire = 259
+    ID = 259,
+    moins_unaire = 260
   };
 #endif
 
@@ -62,8 +63,9 @@ union YYSTYPE
 		int size;
 	} valTab;  
 	float  val;
+        char string[10];
 
-#line 67 "a.tab.h" /* yacc.c:1909  */
+#line 69 "a.tab.h" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;
