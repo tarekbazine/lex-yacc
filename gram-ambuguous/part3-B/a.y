@@ -36,6 +36,7 @@ int top;
 	} valTab;  
 	float  val;
         char string[10];
+	int size;
 } 
 
 %token  <val> NOMBRE
@@ -47,11 +48,16 @@ int top;
 %right moins_unaire
 
 %type <val> E
+%type <size> L
 %%
 
 
 
-Ligne: E '\n'    {return;}
+Ligne: E '\n'    {printf("\n\n");
+	afficher_Quadruplet();
+	printf("\n\n");
+	afficher_simplifie();
+	printf("\n\n"); return 0;}
   ;
 
 E:	ID	{char temp[10];
@@ -77,16 +83,18 @@ E:	ID	{char temp[10];
   ;
 
 F : SOMME '(' L ')' { 
+			//printf("\n %d lll %d",Stk.top,$3);
+	if($3 > 0){
 
-	if(Stk.top > 0){
-
-			/*for(int i=0;i<Stk.top+1;i++){
+			/*printf("\n\nsom");
+			for(int i=0;i<Stk.top+1;i++){
 			printf("\n %s",Stk.items[i]);
-			}*/
-
+			}
+			printf("\n\n");
+*/
 			traiter("+");//when we have just numbers exmpl : som(2,2) so we get tmpX
 
-			while(Stk.top > 0){
+			for(int k=0;k<$3-1;k++){
 
 			char *src1=pop();
 			generer_Quadruplet("+",src1,pop(),src1);  
@@ -97,6 +105,34 @@ F : SOMME '(' L ')' {
 
 	}//else (tmp ou nombre) ya93ad f stack
 			}
+|MOY '(' L ')' {
+
+	if($3 > 0){
+
+			printf("\n\nmoy");
+			for(int i=0;i<Stk.top+1;i++){
+			printf("\n %s",Stk.items[i]);
+			}
+
+			traiter("+");//when we have just numbers exmpl : som(2,2) so we get tmpX
+
+			for(int k=0;k<$3-1;k++){
+
+				char *src1=pop();
+				generer_Quadruplet("+",src1,pop(),src1);  
+				push(src1);
+
+			}
+
+			char str[7];
+			sprintf(str, "%d", $3+1); 
+			char *src1=pop();
+			generer_Quadruplet("/",src1,str,src1);  
+			push(src1);
+
+	}//else (tmp ou nombre) ya93ad f stack
+
+}
 ;
 
 L : L ',' E {
@@ -112,8 +148,10 @@ L : L ',' E {
 	$$.vals[$$.size] = $3; 
 	$$.size++;*/
 //	printf("AdddLIST : %f size: %d vallist %f\n\n",$3,$$.size,$$.vals[0]); 
+$$++;
  }
 | E { 
+$$ = 0;
 	/*char str[7],str1[7]="tmp";
 	sprintf(str, "%d", temp_var-1);    
 	strcat(str1,str);
@@ -138,11 +176,11 @@ int main(void) {
 
 	yyparse();
 
-	printf("\n\n");
+	/*printf("\n\n");
 	afficher_Quadruplet();
 	printf("\n\n");
 	afficher_simplifie();
-	printf("\n\n");
+	printf("\n\n");*/
 }
 
 void traiter(char op[5]){

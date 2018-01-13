@@ -70,8 +70,9 @@ union YYSTYPE
 	} valTab;  
 	float  val;
         char string[10];
+	int size;
 
-#line 75 "a.tab.h" /* yacc.c:1909  */
+#line 76 "a.tab.h" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;
