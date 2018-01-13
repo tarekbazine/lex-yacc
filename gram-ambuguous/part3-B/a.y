@@ -78,61 +78,24 @@ E:	ID	{char temp[10];
 
 F : SOMME '(' L ')' { 
 
-if(Stk.top > 0){
+	if(Stk.top > 0){
 
-for(int i=0;i<Stk.top+1;i++){
-printf("\n %s",Stk.items[i]);
-}
+			/*for(int i=0;i<Stk.top+1;i++){
+			printf("\n %s",Stk.items[i]);
+			}*/
 
-while(Stk.top > 0){
+			traiter("+");//when we have just numbers exmpl : som(2,2) so we get tmpX
 
-char *src1=(char *)malloc(strlen(Stk.items[Stk.top])+1);
-strcpy(src1,Stk.items[Stk.top]);
-Stk.top--;
+			while(Stk.top > 0){
 
-/*char *src2=(char *)malloc(strlen(Stk.items[Stk.top])+1);
-strcpy(src2,Stk.items[Stk.top]);
-Stk.top--;*/
+			char *src1=pop();
+			generer_Quadruplet("+",src1,pop(),src1);  
+			push(src1);
 
-generer_Quadruplet("+",src1,pop(),src1);  
-push(src1);
-
-}
+			}
 
 
-}//else ya93ad f stack
-
-/*
-
-int i;
-	if(Stk.top==-1)
-	{
-	printf("\nStack Empty!! \n");
-	exit(0);
-	}
-	char *str=(char *)malloc(strlen(Stk.items[Stk.top])+1);
-	strcpy(str,Stk.items[Stk.top]);
-	Stk.top--;
-	return(str);
-
-
-traiter("+");
-
-
-char str[7],str1[7]="tmp";
-	sprintf(str, "%d", temp_var);    
-	strcat(str1,str);
-	temp_var++;
-	generer_Quadruplet(op,pop(),pop(),str1);  
-	push(str1);
-
-*/
-/*
-				float som = 0;
-				for(int i=0;i<$3.size;i++){
-					som = som + $3.vals[i];
-				}
-				$$ = som ; */
+	}//else (tmp ou nombre) ya93ad f stack
 			}
 ;
 
@@ -219,7 +182,6 @@ void push(char *str)
 }
 char * pop()
 {
-	int i;
 	if(Stk.top==-1)
 	{
 	printf("\nStack Empty!! \n");

@@ -470,7 +470,7 @@ static const yytype_uint8 yytranslate[] =
 static const yytype_uint8 yyrline[] =
 {
        0,    54,    54,    57,    60,    63,    64,    65,    66,    67,
-      75,    76,    79,   139,   153
+      75,    76,    79,   111,   125
 };
 #endif
 
@@ -1319,67 +1319,39 @@ yyreduce:
 #line 79 "a.y" /* yacc.c:1646  */
     { 
 
-if(Stk.top > 0){
+	if(Stk.top > 0){
 
-for(int i=0;i<Stk.top+1;i++){
-printf("\n %s",Stk.items[i]);
-}
+			/*for(int i=0;i<Stk.top+1;i++){
+			printf("\n %s",Stk.items[i]);
+			}*/
 
-while(Stk.top > 0){
+			traiter("+");
+			/*char str[7],str1[7]="tmp";
+			sprintf(str, "%d", temp_var);    
+			strcat(str1,str);
+			temp_var++;
+			
 
-char *src1=(char *)malloc(strlen(Stk.items[Stk.top])+1);
-strcpy(src1,Stk.items[Stk.top]);
-Stk.top--;
+char *src1=pop();
+			generer_Quadruplet("+",pop(),pop(),src1);  
+			push(src1);*/
 
-/*char *src2=(char *)malloc(strlen(Stk.items[Stk.top])+1);
-strcpy(src2,Stk.items[Stk.top]);
-Stk.top--;*/
+			while(Stk.top > 0){
 
-generer_Quadruplet("+++",src1,pop(),src1);  
-push(src1);
+			char *src1=pop();
+			generer_Quadruplet("+",src1,pop(),src1);  
+			push(src1);
 
-}
-
-
-}//else ya93ad f stack
-
-/*
-
-int i;
-	if(Stk.top==-1)
-	{
-	printf("\nStack Empty!! \n");
-	exit(0);
-	}
-	char *str=(char *)malloc(strlen(Stk.items[Stk.top])+1);
-	strcpy(str,Stk.items[Stk.top]);
-	Stk.top--;
-	return(str);
-
-
-traiter("+");
-
-
-char str[7],str1[7]="tmp";
-	sprintf(str, "%d", temp_var);    
-	strcat(str1,str);
-	temp_var++;
-	generer_Quadruplet(op,pop(),pop(),str1);  
-	push(str1);
-
-*/
-/*
-				float som = 0;
-				for(int i=0;i<$3.size;i++){
-					som = som + $3.vals[i];
-				}
-				$$ = som ; */
 			}
-#line 1379 "a.tab.c" /* yacc.c:1646  */
+
+
+	}//else ya93ad f stack
+			}
+#line 1351 "a.tab.c" /* yacc.c:1646  */
     break;
 
   case 13:
-#line 139 "a.y" /* yacc.c:1646  */
+#line 111 "a.y" /* yacc.c:1646  */
     {
 
 /*char str[7],str1[7]="tmp";
@@ -1394,11 +1366,11 @@ char str[7],str1[7]="tmp";
 	$$.size++;*/
 //	printf("AdddLIST : %f size: %d vallist %f\n\n",$3,$$.size,$$.vals[0]); 
  }
-#line 1398 "a.tab.c" /* yacc.c:1646  */
+#line 1370 "a.tab.c" /* yacc.c:1646  */
     break;
 
   case 14:
-#line 153 "a.y" /* yacc.c:1646  */
+#line 125 "a.y" /* yacc.c:1646  */
     { 
 	/*char str[7],str1[7]="tmp";
 	sprintf(str, "%d", temp_var-1);    
@@ -1411,11 +1383,11 @@ char str[7],str1[7]="tmp";
 	$$.size++;*/
 //	printf("Addd : %f size: %d\n\n",$1,$$.size);
  }
-#line 1415 "a.tab.c" /* yacc.c:1646  */
+#line 1387 "a.tab.c" /* yacc.c:1646  */
     break;
 
 
-#line 1419 "a.tab.c" /* yacc.c:1646  */
+#line 1391 "a.tab.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1643,7 +1615,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 167 "a.y" /* yacc.c:1906  */
+#line 139 "a.y" /* yacc.c:1906  */
 
 
 int yyerror(char *s) {
@@ -1699,7 +1671,6 @@ void push(char *str)
 }
 char * pop()
 {
-	int i;
 	if(Stk.top==-1)
 	{
 	printf("\nStack Empty!! \n");
