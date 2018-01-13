@@ -53,7 +53,8 @@ extern int yydebug;
     MAX = 263,
     SOMME = 264,
     SI = 265,
-    moins_unaire = 266
+    PRODUIT = 266,
+    moins_unaire = 267
   };
 #endif
 
@@ -72,7 +73,7 @@ union YYSTYPE
         char string[10];
 	int size;
 
-#line 76 "a.tab.h" /* yacc.c:1909  */
+#line 77 "a.tab.h" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;

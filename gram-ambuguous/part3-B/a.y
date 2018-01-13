@@ -41,7 +41,7 @@ int top;
 
 %token  <val> NOMBRE
 %token <string> ID
-%token MOY VARIANCE MIN MAX SOMME SI
+%token MOY VARIANCE MIN MAX SOMME SI PRODUIT
 
 %left '+'  '-'
 %left '*'  '/'
@@ -109,10 +109,10 @@ F : SOMME '(' L ')' {
 
 	if($3 > 0){
 
-			printf("\n\nmoy");
+			/*printf("\n\nmoy");
 			for(int i=0;i<Stk.top+1;i++){
 			printf("\n %s",Stk.items[i]);
-			}
+			}*/
 
 			traiter("+");//when we have just numbers exmpl : som(2,2) so we get tmpX
 
@@ -133,6 +133,29 @@ F : SOMME '(' L ')' {
 	}//else (tmp ou nombre) ya93ad f stack
 
 }
+|PRODUIT '(' L ')' { 
+			//printf("\n %d lll %d",Stk.top,$3);
+	if($3 > 0){
+
+			/*printf("\n\nsom");
+			for(int i=0;i<Stk.top+1;i++){
+			printf("\n %s",Stk.items[i]);
+			}
+			printf("\n\n");
+*/
+			traiter("*");//when we have just numbers exmpl : som(2,2) so we get tmpX
+
+			for(int k=0;k<$3-1;k++){
+
+			char *src1=pop();
+			generer_Quadruplet("*",src1,pop(),src1);  
+			push(src1);
+
+			}
+
+
+	}//else (tmp ou nombre) ya93ad f stack
+			}
 ;
 
 L : L ',' E {

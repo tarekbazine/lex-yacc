@@ -40,6 +40,8 @@ reel	  {entier}\.{entier}
 
 "si" return(SI);
 
+"prod" return(PRODUIT);
+
 [a-zA-Z_][a-zA-Z0-9_]*    {
 	strcpy(yylval.string,yytext);
 	return ID; 
