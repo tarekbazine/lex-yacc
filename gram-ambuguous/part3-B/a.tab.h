@@ -54,7 +54,8 @@ extern int yydebug;
     SOMME = 264,
     SI = 265,
     PRODUIT = 266,
-    moins_unaire = 267
+    ECARTTYPE = 267,
+    moins_unaire = 268
   };
 #endif
 
@@ -73,7 +74,7 @@ union YYSTYPE
         char string[10];
 	int size;
 
-#line 77 "a.tab.h" /* yacc.c:1909  */
+#line 78 "a.tab.h" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;

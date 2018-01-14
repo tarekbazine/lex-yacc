@@ -44,7 +44,7 @@ void traiter(char op[5]);
 
 %token  <val> NOMBRE
 %token <string> ID
-%token MOY VARIANCE MIN MAX SOMME SI PRODUIT
+%token MOY VARIANCE MIN MAX SOMME SI PRODUIT ECARTTYPE
 
 %left '+'  '-'
 %left '*'  '/'
@@ -227,10 +227,141 @@ if($3 > 0){//si il y plus d un element dans la list L
 			push(src2);//le resultat est mise dans la pile pour que l imbrication avec d autre function marche
 
 
-			//printf("\n\nmoy");
-			for(int i=0;i<Stk.top+1;i++){
+			/*for(int i=0;i<Stk.top+1;i++){
 				printf("\n %s",Stk.items[i]);
+			}*/
+
+	}//else (tmp ou nombre) ya93ad f stack
+
+
+
+
+}
+|ECARTTYPE '(' L ')' { 
+ 
+
+if($3 > 0){//si il y plus d un element dans la list L
+
+
+//************************calc moy************************
+			/*printf("\n\nmoy");
+			for(int i=0;i<Stk.top+1;i++){
+			printf("\n %s",Stk.items[i]);
+			}*/
+
+			struct Stack stack; 
+			stack.top = -1; 
+
+			char str1[7];
+			sprintf(str1, "tmp%d", temp_var);    
+			//strcat(str1,str);
+			temp_var++;
+			char *src1=pop();push_pile(src1,&stack);//garder dans la pile local
+			char *src2=pop();push_pile(src2,&stack);
+			generer_Quadruplet("+",src1,src2,str1);  
+			push(str1);
+
+
+			for(int k=0;k<$3-1;k++){
+
+				src1=pop();
+				src2=pop();push_pile(src2,&stack);
+				generer_Quadruplet("+",src1,src2,src1);  
+				push(src1);
+
 			}
+
+			sprintf(str1, "%d", $3+1); 
+			char *moyTmp=pop();
+			generer_Quadruplet("/",moyTmp,str1,moyTmp);  
+			//push(src1);
+
+
+			//print local stack 
+			printf("\n\nlocal stack ");
+			for(int i=0;i<stack.top+1;i++){
+				printf("\n %s",stack.items[i]);
+			}
+
+
+//************************somme diff carre************************
+
+			char r[7];
+			sprintf(r, "tmp%d", temp_var);    
+			temp_var++;
+			sprintf(src1, "tmp%d", temp_var);    
+			temp_var++;
+			sprintf(src2, "tmp%d", temp_var);    //tmp somme diff carre 
+			temp_var++;
+
+			generer_Quadruplet("-",moyTmp,pop_pile(&stack),src1);  //diff avec moy
+			generer_Quadruplet("*",src1,src1,src1);  //carre
+			generer_Quadruplet("-",moyTmp,pop_pile(&stack),r);  //diff avec moy
+			generer_Quadruplet("*",r,r,r);  //carre
+			generer_Quadruplet("+",src1,r,src2);  //somme des diff carre
+
+
+			//the first two element 
+
+			for(int i=2;i<$3+1;i++){
+				sprintf(src1, "tmp%d", temp_var);    
+				temp_var++;
+				//src1 = ;
+				//printf("\n\n%s ----  %s %d\n",src1,stack.items[i],stack.top);
+				generer_Quadruplet("-",moyTmp,pop_pile(&stack),src1);  //diff avec moy
+				generer_Quadruplet("*",src1,src1,src1);  //carre
+				generer_Quadruplet("+",src1,src2,src2);  //somme des diff carre
+			}
+
+			generer_Quadruplet("/",src2,str1,src2);  //division (de somme des diff carre) sur n
+
+			/**** scr2 contient la variance , utilisant l algo d babylonian pour recuperér la racin carre**/
+			/*********
+			const double epsilon = 0.0001;
+			double guess = (double)n / 2.0;
+			double r = 0.0;
+			while( fabs(guess * guess - (double)n) > epsilon )
+			{
+			    r = (double)n / guess;
+			    guess = (guess + r) / 2.0;
+			}
+			***********/
+
+			char guess[7];
+			sprintf(guess, "tmp%d", temp_var);    
+			temp_var++;
+			sprintf(r, "tmp%d", temp_var);    
+			temp_var++;
+
+			generer_Quadruplet("/",src2,"2",guess);//guess = var / 2;
+
+			int jumpToBeforeCondAdd = Index;
+
+			/*** start QUADs cond fabs(guess * guess - (double)n) > epsilon ***/
+			sprintf(src1, "tmp%d", temp_var);    
+			temp_var++;
+			generer_Quadruplet("*",guess,guess,src1);
+			generer_Quadruplet("-",src1,src2,src1);
+			generer_Quadruplet("ABS",src1,"",src1);
+			generer_Quadruplet("CMP",src1,"0.0001",""); //epsilon = 0.0001 c est erreur 
+			int jlAddToBeModified = Index;
+			generer_Quadruplet("JL","","","");  //jump less out of (after) the insts block ----->
+			/*** end cond ***/
+
+			/*** start QUADs loop inst ***/
+			generer_Quadruplet("/",src2,guess,r);//r = (double)n / guess;
+			generer_Quadruplet("+",guess,r,r); //r = (guess + r)
+			generer_Quadruplet("/",r,"2",guess);//guess = r / 2.0;
+			sprintf(str1, "@%d", jumpToBeforeCondAdd);    			
+			generer_Quadruplet("JMP",str1,"","");
+			/*** end QUADs loop inst ***/
+
+			//MAJ ADD OF THE JL INST
+			sprintf(str1, "@%d", Index);    
+			strcpy(QUAD[jlAddToBeModified].src1,str1);
+
+			push(guess);//le resultat (ecart-type) est mise dans la pile pour que l imbrication avec d autre function marche
+
 
 	}//else (tmp ou nombre) ya93ad f stack
 

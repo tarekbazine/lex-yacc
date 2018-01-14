@@ -32,6 +32,8 @@ reel	  {entier}\.{entier}
 
 "var"  return(VARIANCE);
 
+"ecrt"  return(ECARTTYPE);
+
 "min"  return(MIN);
 
 "max"  return(MAX);
