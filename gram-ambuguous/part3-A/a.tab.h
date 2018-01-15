@@ -56,16 +56,12 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 32 "a.y" /* yacc.c:1909  */
+#line 26 "a.y" /* yacc.c:1909  */
 
-	struct valTab{
-		float vals[100];
-		int size;
-	} valTab;  
 	float  val;
-        char string[10];
+    char string[10];
 
-#line 69 "a.tab.h" /* yacc.c:1909  */
+#line 65 "a.tab.h" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;

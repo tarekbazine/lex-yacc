@@ -68,6 +68,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+#include <string.h>
 
 
 int Index=0;
@@ -76,9 +77,7 @@ int temp_var=0;
 void generer_Quadruplet(char [],char [],char [],char []);
 void afficher_Quadruplet();
 void afficher_simplifie();
-void push(char*);
-char* pop();
-void traiter(char op[5]);
+void traiter(char op[5],char *,char *,char *);
 
 struct Quadruple{
 char code_op[5];
@@ -87,13 +86,8 @@ char src2[10];
 char dest[10];
 }QUAD[25];
 
-struct Stack{
-char *items[10];
-int top;
-}Stk;
 
-
-#line 97 "a.tab.c" /* yacc.c:339  */
+#line 91 "a.tab.c" /* yacc.c:339  */
 
 # ifndef YY_NULLPTR
 #  if defined __cplusplus && 201103L <= __cplusplus
@@ -139,16 +133,12 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 32 "a.y" /* yacc.c:355  */
+#line 26 "a.y" /* yacc.c:355  */
 
-	struct valTab{
-		float vals[100];
-		int size;
-	} valTab;  
 	float  val;
-        char string[10];
+    char string[10];
 
-#line 152 "a.tab.c" /* yacc.c:355  */
+#line 142 "a.tab.c" /* yacc.c:355  */
 };
 
 typedef union YYSTYPE YYSTYPE;
@@ -165,7 +155,7 @@ int yyparse (void);
 
 /* Copy the second part of user declarations.  */
 
-#line 169 "a.tab.c" /* yacc.c:358  */
+#line 159 "a.tab.c" /* yacc.c:358  */
 
 #ifdef short
 # undef short
@@ -463,8 +453,8 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    53,    53,    56,    59,    62,    63,    64,    65,    66,
-      74
+       0,    43,    43,    46,    50,    54,    55,    56,    57,    58,
+      66
 };
 #endif
 
@@ -1240,71 +1230,73 @@ yyreduce:
   switch (yyn)
     {
         case 2:
-#line 53 "a.y" /* yacc.c:1646  */
+#line 43 "a.y" /* yacc.c:1646  */
     {return;}
-#line 1246 "a.tab.c" /* yacc.c:1646  */
+#line 1236 "a.tab.c" /* yacc.c:1646  */
     break;
 
   case 3:
-#line 56 "a.y" /* yacc.c:1646  */
-    {char temp[10];
-                snprintf(temp,10,"%s",(yyvsp[0].string));    
-        	push(temp);}
-#line 1254 "a.tab.c" /* yacc.c:1646  */
+#line 46 "a.y" /* yacc.c:1646  */
+    {	char temp[10];
+            snprintf(temp,10,"%s",(yyvsp[0].string));
+            strcpy((yyval.string),temp); 
+        }
+#line 1245 "a.tab.c" /* yacc.c:1646  */
     break;
 
   case 4:
-#line 59 "a.y" /* yacc.c:1646  */
+#line 50 "a.y" /* yacc.c:1646  */
     { char temp[10];
-                snprintf(temp,10,"%f",(yyvsp[0].val));    
-        	push(temp);}
-#line 1262 "a.tab.c" /* yacc.c:1646  */
+                snprintf(temp,10,"%s",(yyvsp[0].string));    
+                strcpy((yyval.string),temp); 
+        }
+#line 1254 "a.tab.c" /* yacc.c:1646  */
     break;
 
   case 5:
-#line 62 "a.y" /* yacc.c:1646  */
-    { traiter("+");}
-#line 1268 "a.tab.c" /* yacc.c:1646  */
+#line 54 "a.y" /* yacc.c:1646  */
+    { traiter("+",(yyvsp[-2].string),(yyvsp[0].string),(yyval.string));}
+#line 1260 "a.tab.c" /* yacc.c:1646  */
     break;
 
   case 6:
-#line 63 "a.y" /* yacc.c:1646  */
-    { traiter("-");}
-#line 1274 "a.tab.c" /* yacc.c:1646  */
+#line 55 "a.y" /* yacc.c:1646  */
+    { traiter("-",(yyvsp[-2].string),(yyvsp[0].string),(yyval.string));}
+#line 1266 "a.tab.c" /* yacc.c:1646  */
     break;
 
   case 7:
-#line 64 "a.y" /* yacc.c:1646  */
-    { traiter("*");}
-#line 1280 "a.tab.c" /* yacc.c:1646  */
+#line 56 "a.y" /* yacc.c:1646  */
+    { traiter("*",(yyvsp[-2].string),(yyvsp[0].string),(yyval.string));}
+#line 1272 "a.tab.c" /* yacc.c:1646  */
     break;
 
   case 8:
-#line 65 "a.y" /* yacc.c:1646  */
-    { traiter("/"); }
-#line 1286 "a.tab.c" /* yacc.c:1646  */
+#line 57 "a.y" /* yacc.c:1646  */
+    { traiter("/",(yyvsp[-2].string),(yyvsp[0].string),(yyval.string)); }
+#line 1278 "a.tab.c" /* yacc.c:1646  */
     break;
 
   case 9:
-#line 66 "a.y" /* yacc.c:1646  */
-    { char str[7],str1[7]="tmp";
-				sprintf(str, "%d", temp_var);    
-				strcat(str1,str);
+#line 58 "a.y" /* yacc.c:1646  */
+    { 
+  				char str[7];
+				sprintf(str, "tmp%d", temp_var);    
 				temp_var++;
-				generer_Quadruplet("NEG","",pop(),str1);  
-				push(str1);
+				generer_Quadruplet("NEG","",(yyvsp[0].string),str);  
+				strcpy((yyval.string),str); 
 				 }
-#line 1298 "a.tab.c" /* yacc.c:1646  */
+#line 1290 "a.tab.c" /* yacc.c:1646  */
     break;
 
   case 10:
-#line 74 "a.y" /* yacc.c:1646  */
-    {}
-#line 1304 "a.tab.c" /* yacc.c:1646  */
+#line 66 "a.y" /* yacc.c:1646  */
+    { strcpy((yyval.string),(yyvsp[-1].string));}
+#line 1296 "a.tab.c" /* yacc.c:1646  */
     break;
 
 
-#line 1308 "a.tab.c" /* yacc.c:1646  */
+#line 1300 "a.tab.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1532,7 +1524,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 77 "a.y" /* yacc.c:1906  */
+#line 69 "a.y" /* yacc.c:1906  */
 
 
 int yyerror(char *s) {
@@ -1540,6 +1532,7 @@ printf("%s\n",s);
 }
 
 int main(void) {
+
 	yyparse();
 
 	printf("\n\n");
@@ -1549,13 +1542,10 @@ int main(void) {
 	printf("\n\n");
 }
 
-void traiter(char op[5]){
-	char str[7],str1[7]="tmp";
-	sprintf(str, "%d", temp_var);    
-	strcat(str1,str);
+void traiter(char op[5],char *src1,char *src2,char *dest){
+	sprintf(dest, "tmp%d", temp_var);    
 	temp_var++;
-	generer_Quadruplet(op,pop(),pop(),str1);  
-	push(str1);
+	generer_Quadruplet(op,src1,src2,dest);  
 }
 
 void afficher_Quadruplet()
@@ -1577,26 +1567,6 @@ void afficher_simplifie()
 	printf("\n %d     %s   :=       %s          %s          %s",i,QUAD[i].dest ,QUAD[i].src1,QUAD[i].code_op ,QUAD[i].src2);
 }
 
-
-void push(char *str)
-{
-	Stk.top++;
-	Stk.items[Stk.top]=(char *)malloc(strlen(str)+1);
-	strcpy(Stk.items[Stk.top],str);
-}
-char * pop()
-{
-	int i;
-	if(Stk.top==-1)
-	{
-	printf("\nStack Empty!! \n");
-	exit(0);
-	}
-	char *str=(char *)malloc(strlen(Stk.items[Stk.top])+1);;
-	strcpy(str,Stk.items[Stk.top]);
-	Stk.top--;
-	return(str);
-}
  
 void generer_Quadruplet(char op[5],char op1[10],char op2[10],char res[10]){
                                         strcpy(QUAD[Index].code_op,op);
