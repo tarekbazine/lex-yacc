@@ -284,6 +284,63 @@ if($3.size > 0){//si il y plus d un element dans la list L
 	}
 
 }
+|MAX '(' L ')' { 
+
+		if($3.size > 0){//si il y plus d un element dans la list L
+	  
+			char max[10],str[10];
+			sprintf(max, "tmp%d", temp_var);    
+      		temp_var++;
+
+	  		//les deux premiers elements
+		    /*generer_Quadruplet("CMP",$3.vals[0],$3.vals[1],"");
+            sprintf(str, "@%d", Index+3);          
+		    generer_Quadruplet("JG",str,"","");
+		    generer_Quadruplet("MOV",$3.vals[1],"",max);
+	        sprintf(str, "@%d", Index+2);          
+		    generer_Quadruplet("JMP",str,"","");*/
+
+   		    generer_Quadruplet("MOV",$3.vals[0],"",max); 
+
+   		    for(int k=1;k<$3.size+1;k++){
+   		    	generer_Quadruplet("CMP",max,$3.vals[k],"");
+	            sprintf(str, "@%d", Index+2);          
+			    generer_Quadruplet("JG",str,"","");
+			    generer_Quadruplet("MOV",$3.vals[k],"",max);
+			}
+
+			strcpy($$,max);
+
+		 }else{
+			strcpy($$,$3.vals[0]);
+		}
+	
+	}
+
+|MIN '(' L ')' { 
+
+		if($3.size > 0){//si il y plus d un element dans la list L
+	  
+			char min[10],str[10];
+			sprintf(min, "tmp%d", temp_var);    
+      		temp_var++;
+
+   		    generer_Quadruplet("MOV",$3.vals[0],"",min); 
+
+   		    for(int k=1;k<$3.size+1;k++){
+   		    	generer_Quadruplet("CMP",min,$3.vals[k],"");
+	            sprintf(str, "@%d", Index+2);          
+			    generer_Quadruplet("JL",str,"","");
+			    generer_Quadruplet("MOV",$3.vals[k],"",min);
+			}
+
+			strcpy($$,min);
+
+		 }else{
+			strcpy($$,$3.vals[0]);
+		}
+	
+	}	
   
 ;
 
@@ -308,11 +365,6 @@ int main(void) {
 
 	yyparse();
 
-	/*printf("\n\n");
-	afficher_Quadruplet();
-	printf("\n\n");
-	afficher_simplifie();
-	printf("\n\n");*/
 }
 
 void traiter(char op[5],char *src1,char *src2,char *dest){
