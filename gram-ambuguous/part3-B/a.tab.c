@@ -80,23 +80,21 @@ char src2[10];
 char dest[10];
 }QUAD[25];
 
-struct Stack{
+/*struct Stack{
 char *items[10]; //max 10 elem in stack
 int top;
-}Stk;
+}Stk;*/
 
 
 void generer_Quadruplet(char [],char [],char [],char []);
 void afficher_Quadruplet();
 void afficher_simplifie();
-void push(char*);
-char* pop();
-void push_pile(char*,struct Stack *);
-char* pop_pile(struct Stack *);
-void traiter(char op[5]);
+//void push_pile(char*,struct Stack *);
+//char* pop_pile(struct Stack *);
+void traiter(char op[5],char *,char *,char *);
 
 
-#line 100 "a.tab.c" /* yacc.c:339  */
+#line 98 "a.tab.c" /* yacc.c:339  */
 
 # ifndef YY_NULLPTR
 #  if defined __cplusplus && 201103L <= __cplusplus
@@ -131,8 +129,8 @@ extern int yydebug;
 # define YYTOKENTYPE
   enum yytokentype
   {
-    NOMBRE = 258,
-    ID = 259,
+    ID = 258,
+    NOMBRE = 259,
     MOY = 260,
     VARIANCE = 261,
     MIN = 262,
@@ -150,17 +148,15 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 35 "a.y" /* yacc.c:355  */
+#line 33 "a.y" /* yacc.c:355  */
 
 	struct valTab{
-		float vals[100];
+		char vals[20][10];
 		int size;
 	} valTab;  
-	float  val;
-        char string[10];
-	int size;
+    char string[10];
 
-#line 164 "a.tab.c" /* yacc.c:355  */
+#line 160 "a.tab.c" /* yacc.c:355  */
 };
 
 typedef union YYSTYPE YYSTYPE;
@@ -177,7 +173,7 @@ int yyparse (void);
 
 /* Copy the second part of user declarations.  */
 
-#line 181 "a.tab.c" /* yacc.c:358  */
+#line 177 "a.tab.c" /* yacc.c:358  */
 
 #ifdef short
 # undef short
@@ -475,8 +471,8 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint16 yyrline[] =
 {
-       0,    59,    59,    66,    69,    72,    73,    74,    75,    76,
-      85,    86,    89,   112,   140,   163,   240,   374,   389
+       0,    55,    55,    63,    67,    71,    72,    73,    74,    75,
+      83,    84,    87,   102,   122,   139,   191,   291,   295
 };
 #endif
 
@@ -485,7 +481,7 @@ static const yytype_uint16 yyrline[] =
    First, the terminals, then, starting at YYNTOKENS, nonterminals.  */
 static const char *const yytname[] =
 {
-  "$end", "error", "$undefined", "NOMBRE", "ID", "MOY", "VARIANCE", "MIN",
+  "$end", "error", "$undefined", "ID", "NOMBRE", "MOY", "VARIANCE", "MIN",
   "MAX", "SOMME", "SI", "PRODUIT", "ECARTTYPE", "'+'", "'-'", "'*'", "'/'",
   "moins_unaire", "'\\n'", "'('", "')'", "','", "$accept", "Ligne", "E",
   "F", "L", YY_NULLPTR
@@ -529,7 +525,7 @@ static const yytype_int8 yypact[] =
      means the default is an error.  */
 static const yytype_uint8 yydefact[] =
 {
-       0,     4,     3,     0,     0,     0,     0,     0,     0,     0,
+       0,     3,     4,     0,     0,     0,     0,     0,     0,     0,
        0,     0,    11,     0,     0,     0,     0,     0,     9,     0,
        1,     0,     0,     0,     0,     2,    18,     0,     0,     0,
        0,     0,    10,     5,     6,     7,     8,    13,     0,    15,
@@ -1270,422 +1266,318 @@ yyreduce:
   switch (yyn)
     {
         case 2:
-#line 59 "a.y" /* yacc.c:1646  */
-    {printf("\n\n");
-	afficher_Quadruplet();
-	printf("\n\n");
-	afficher_simplifie();
-	printf("\n\n"); return 0;}
-#line 1280 "a.tab.c" /* yacc.c:1646  */
+#line 55 "a.y" /* yacc.c:1646  */
+    {	printf("\n\n");
+					afficher_Quadruplet();
+					printf("\n\n");
+					afficher_simplifie();
+					printf("\n\n"); return 0;	}
+#line 1276 "a.tab.c" /* yacc.c:1646  */
     break;
 
   case 3:
-#line 66 "a.y" /* yacc.c:1646  */
-    {char temp[10];
-                snprintf(temp,10,"%s",(yyvsp[0].string));    
-        	push(temp);}
-#line 1288 "a.tab.c" /* yacc.c:1646  */
+#line 63 "a.y" /* yacc.c:1646  */
+    {	char temp[10];
+            snprintf(temp,10,"%s",(yyvsp[0].string));
+            strcpy((yyval.string),temp); 
+        }
+#line 1285 "a.tab.c" /* yacc.c:1646  */
     break;
 
   case 4:
-#line 69 "a.y" /* yacc.c:1646  */
+#line 67 "a.y" /* yacc.c:1646  */
     { char temp[10];
-                snprintf(temp,10,"%f",(yyvsp[0].val));    
-        	push(temp);}
-#line 1296 "a.tab.c" /* yacc.c:1646  */
+            snprintf(temp,10,"%s",(yyvsp[0].string));    
+            strcpy((yyval.string),temp); 
+        }
+#line 1294 "a.tab.c" /* yacc.c:1646  */
     break;
 
   case 5:
-#line 72 "a.y" /* yacc.c:1646  */
-    { traiter("+");}
-#line 1302 "a.tab.c" /* yacc.c:1646  */
+#line 71 "a.y" /* yacc.c:1646  */
+    { traiter("+",(yyvsp[-2].string),(yyvsp[0].string),(yyval.string));}
+#line 1300 "a.tab.c" /* yacc.c:1646  */
     break;
 
   case 6:
-#line 73 "a.y" /* yacc.c:1646  */
-    { traiter("-");}
-#line 1308 "a.tab.c" /* yacc.c:1646  */
+#line 72 "a.y" /* yacc.c:1646  */
+    { traiter("-",(yyvsp[-2].string),(yyvsp[0].string),(yyval.string));}
+#line 1306 "a.tab.c" /* yacc.c:1646  */
     break;
 
   case 7:
-#line 74 "a.y" /* yacc.c:1646  */
-    { traiter("*");}
-#line 1314 "a.tab.c" /* yacc.c:1646  */
+#line 73 "a.y" /* yacc.c:1646  */
+    { traiter("*",(yyvsp[-2].string),(yyvsp[0].string),(yyval.string));}
+#line 1312 "a.tab.c" /* yacc.c:1646  */
     break;
 
   case 8:
-#line 75 "a.y" /* yacc.c:1646  */
-    { traiter("/"); }
-#line 1320 "a.tab.c" /* yacc.c:1646  */
+#line 74 "a.y" /* yacc.c:1646  */
+    { traiter("/",(yyvsp[-2].string),(yyvsp[0].string),(yyval.string)); }
+#line 1318 "a.tab.c" /* yacc.c:1646  */
     break;
 
   case 9:
-#line 76 "a.y" /* yacc.c:1646  */
-    { char str1[7];
-				sprintf(str1, "tmp%d", temp_var);    
-				//strcat(str1,str);
+#line 75 "a.y" /* yacc.c:1646  */
+    { 
+  				char str[7];
+				sprintf(str, "tmp%d", temp_var);    
 				temp_var++;
-				generer_Quadruplet("NEG","",pop(),str1);  
-				push(str1);
-				
+				generer_Quadruplet("NEG","",(yyvsp[0].string),str);  
+				strcpy((yyval.string),str); 
 				 }
-#line 1333 "a.tab.c" /* yacc.c:1646  */
+#line 1330 "a.tab.c" /* yacc.c:1646  */
     break;
 
   case 10:
-#line 85 "a.y" /* yacc.c:1646  */
-    {}
-#line 1339 "a.tab.c" /* yacc.c:1646  */
+#line 83 "a.y" /* yacc.c:1646  */
+    { strcpy((yyval.string),(yyvsp[-1].string));}
+#line 1336 "a.tab.c" /* yacc.c:1646  */
     break;
 
   case 12:
-#line 89 "a.y" /* yacc.c:1646  */
+#line 87 "a.y" /* yacc.c:1646  */
     { 
-			//printf("\n %d lll %d",Stk.top,$3);
-	if((yyvsp[-1].size) > 0){
+		if((yyvsp[-1].valTab).size > 0){
 
-			/*printf("\n\nsom");
-			for(int i=0;i<Stk.top+1;i++){
-			printf("\n %s",Stk.items[i]);
-			}
-			printf("\n\n");
-*/
-			traiter("+");//when we have just numbers exmpl : som(2,2) so we get tmpX
+				char somme[10];
+				traiter("+",(yyvsp[-1].valTab).vals[0],(yyvsp[-1].valTab).vals[1],somme);//when we have just numbers exmpl : som(2,2) so we get tmpX
 
-			for(int k=0;k<(yyvsp[-1].size)-1;k++){
+				for(int k=2;k<(yyvsp[-1].valTab).size+1;k++){
+					generer_Quadruplet("+",(yyvsp[-1].valTab).vals[k],somme,somme);  
+				}
 
-			char *src1=pop();
-			generer_Quadruplet("+",src1,pop(),src1);  
-			push(src1);
-
-			}
-
-
-	}//else (tmp ou nombre) ya93ad f stack
-			}
-#line 1367 "a.tab.c" /* yacc.c:1646  */
+				strcpy((yyval.string),somme);
+		}else{
+			strcpy((yyval.string),(yyvsp[-1].valTab).vals[0]);
+		}
+	}
+#line 1356 "a.tab.c" /* yacc.c:1646  */
     break;
 
   case 13:
-#line 112 "a.y" /* yacc.c:1646  */
+#line 102 "a.y" /* yacc.c:1646  */
     {
+	  if((yyvsp[-1].valTab).size > 0){
 
-	if((yyvsp[-1].size) > 0){
-
-			/*printf("\n\nmoy");
-			for(int i=0;i<Stk.top+1;i++){
-			printf("\n %s",Stk.items[i]);
-			}*/
-
-			traiter("+");//when we have just numbers exmpl : som(2,2) so we get tmpX
-
-			for(int k=0;k<(yyvsp[-1].size)-1;k++){
-
-				char *src1=pop();
-				generer_Quadruplet("+",src1,pop(),src1);  
-				push(src1);
-
+	      char moy[10];
+	      traiter("+",(yyvsp[-1].valTab).vals[0],(yyvsp[-1].valTab).vals[1],moy);//when we have just numbers exmpl : som(2,2) so we get tmpX
+	  
+			for(int k=2;k<(yyvsp[-1].valTab).size+1;k++){
+				generer_Quadruplet("+",(yyvsp[-1].valTab).vals[k],moy,moy);  
 			}
 
-			char str[7];
-			sprintf(str, "%d", (yyvsp[-1].size)+1); 
-			char *src1=pop();
-			generer_Quadruplet("/",src1,str,src1);  
-			push(src1);
+	      char str[7];
+	      sprintf(str, "%d", (yyvsp[-1].valTab).size+1); 
+	      generer_Quadruplet("/",moy,str,moy);  
+	      strcpy((yyval.string),moy);
 
-	}//else (tmp ou nombre) ya93ad f stack
+	  }else{
+			strcpy((yyval.string),(yyvsp[-1].valTab).vals[0]);
+		}
 
-}
-#line 1400 "a.tab.c" /* yacc.c:1646  */
+	}
+#line 1381 "a.tab.c" /* yacc.c:1646  */
     break;
 
   case 14:
-#line 140 "a.y" /* yacc.c:1646  */
+#line 122 "a.y" /* yacc.c:1646  */
     { 
-			//printf("\n %d lll %d",Stk.top,$3);
-	if((yyvsp[-1].size) > 0){
+	  if((yyvsp[-1].valTab).size > 0){
 
-			/*printf("\n\nsom");
-			for(int i=0;i<Stk.top+1;i++){
-			printf("\n %s",Stk.items[i]);
-			}
-			printf("\n\n");
-*/
-			traiter("*");//when we have just numbers exmpl : som(2,2) so we get tmpX
+	      char prd[10];
+	      traiter("*",(yyvsp[-1].valTab).vals[0],(yyvsp[-1].valTab).vals[1],prd);//when we have just numbers exmpl : som(2,2) so we get tmpX
 
-			for(int k=0;k<(yyvsp[-1].size)-1;k++){
+		for(int k=2;k<(yyvsp[-1].valTab).size+1;k++){
+			generer_Quadruplet("*",(yyvsp[-1].valTab).vals[k],prd,prd);  
+		}
 
-			char *src1=pop();
-			generer_Quadruplet("*",src1,pop(),src1);  
-			push(src1);
+		strcpy((yyval.string),prd);
 
-			}
-
-
-	}//else (tmp ou nombre) ya93ad f stack
-			}
-#line 1428 "a.tab.c" /* yacc.c:1646  */
+	  }else{
+		strcpy((yyval.string),(yyvsp[-1].valTab).vals[0]);
+	}
+  }
+#line 1402 "a.tab.c" /* yacc.c:1646  */
     break;
 
   case 15:
-#line 163 "a.y" /* yacc.c:1646  */
+#line 139 "a.y" /* yacc.c:1646  */
     { 
  
 
-if((yyvsp[-1].size) > 0){//si il y plus d un element dans la list L
+if((yyvsp[-1].valTab).size > 0){//si il y plus d un element dans la list L
 
 
 //************************calc moy************************
-			/*printf("\n\nmoy");
-			for(int i=0;i<Stk.top+1;i++){
-			printf("\n %s",Stk.items[i]);
-			}*/
+      char moy[10];
+      traiter("+",(yyvsp[-1].valTab).vals[0],(yyvsp[-1].valTab).vals[1],moy);//when we have just numbers exmpl : som(2,2) so we get tmpX
+  
+		for(int k=2;k<(yyvsp[-1].valTab).size+1;k++){
+			generer_Quadruplet("+",(yyvsp[-1].valTab).vals[k],moy,moy);  
+		}
 
-			struct Stack stack; 
-			stack.top = -1; 
-
-			char str1[7];
-			sprintf(str1, "tmp%d", temp_var);    
-			//strcat(str1,str);
-			temp_var++;
-			char *src1=pop();push_pile(src1,&stack);//garder dans la pile local
-			char *src2=pop();push_pile(src2,&stack);
-			generer_Quadruplet("+",src1,src2,str1);  
-			push(str1);
+      char str[7];
+      sprintf(str, "%d", (yyvsp[-1].valTab).size+1); 
+      generer_Quadruplet("/",moy,str,moy);  
 
 
-			//traiter("+");//when we have just numbers exmpl : som(2,2) so we get tmpX
+//************************somme diff carre************************//
 
-			for(int k=0;k<(yyvsp[-1].size)-1;k++){
+      char src2[10],src1[10],r[10];
+      sprintf(r, "tmp%d", temp_var);    
+      temp_var++;
+      sprintf(src1, "tmp%d", temp_var);    
+      temp_var++;
+      sprintf(src2, "tmp%d", temp_var);    
+      temp_var++;
 
-				src1=pop();
-				src2=pop();push_pile(src2,&stack);
-				generer_Quadruplet("+",src1,src2,src1);  
-				push(src1);
-
-			}
-
-			sprintf(str1, "%d", (yyvsp[-1].size)+1); 
-			char *moyTmp=pop();
-			generer_Quadruplet("/",moyTmp,str1,moyTmp);  
-			//push(src1);
-
-
-			//print local stack 
-			printf("\n\nlocal stack ");
-			for(int i=0;i<stack.top+1;i++){
-				printf("\n %s",stack.items[i]);
-			}
+      generer_Quadruplet("-",moy,(yyvsp[-1].valTab).vals[0],src1);  //diff avec moy
+      generer_Quadruplet("*",src1,src1,src1);  //carre
+      generer_Quadruplet("-",moy,(yyvsp[-1].valTab).vals[1],r);  //diff avec moy
+      generer_Quadruplet("*",r,r,r);  //carre
+      generer_Quadruplet("+",src1,r,src2);  //somme des diff carre
 
 
-//************************somme diff carre************************
+      for(int i=2;i<(yyvsp[-1].valTab).size+1;i++){
+        generer_Quadruplet("-",moy,(yyvsp[-1].valTab).vals[i],(yyvsp[-1].valTab).vals[i]);  //diff avec moy
+        generer_Quadruplet("*",(yyvsp[-1].valTab).vals[i],(yyvsp[-1].valTab).vals[i],(yyvsp[-1].valTab).vals[i]);  //carre
+        generer_Quadruplet("+",(yyvsp[-1].valTab).vals[i],src2,src2);  //somme des diff carre
+      }
 
-			sprintf(src2, "tmp%d", temp_var);    
-			temp_var++;
+      generer_Quadruplet("/",src2,str,src2);  //division (de somme des diff carre) sur n
 
-			for(int i=0;i<(yyvsp[-1].size)+1;i++){
-				src1 = pop_pile(&stack);
-				//printf("\n\n%s ----  %s %d\n",src1,stack.items[i],stack.top);
-				generer_Quadruplet("-",moyTmp,src1,src1);  //diff avec moy
-				generer_Quadruplet("*",src1,src1,src1);  //carre
-				generer_Quadruplet("+",src1,src2,src2);  //somme des diff carre
-			}
-
-			generer_Quadruplet("/",src2,str1,src2);  //division (de somme des diff carre) sur n
-
-			push(src2);//le resultat est mise dans la pile pour que l imbrication avec d autre function marche
+      strcpy((yyval.string),src2);//le resultat est mise dans la pile pour que l imbrication avec d autre function marche
 
 
-			/*for(int i=0;i<Stk.top+1;i++){
-				printf("\n %s",Stk.items[i]);
-			}*/
-
-	}//else (tmp ou nombre) ya93ad f stack
-
-
-
-
+  	}else{
+		strcpy((yyval.string),"0");//var(x) = 0
+	}
 }
-#line 1510 "a.tab.c" /* yacc.c:1646  */
+#line 1458 "a.tab.c" /* yacc.c:1646  */
     break;
 
   case 16:
-#line 240 "a.y" /* yacc.c:1646  */
+#line 191 "a.y" /* yacc.c:1646  */
     { 
  
 
-if((yyvsp[-1].size) > 0){//si il y plus d un element dans la list L
-
+	if((yyvsp[-1].valTab).size > 0){//si il y plus d un element dans la list L
 
 //************************calc moy************************
-			/*printf("\n\nmoy");
-			for(int i=0;i<Stk.top+1;i++){
-			printf("\n %s",Stk.items[i]);
-			}*/
+      char moy[10];
+      traiter("+",(yyvsp[-1].valTab).vals[0],(yyvsp[-1].valTab).vals[1],moy);//when we have just numbers exmpl : som(2,2) so we get tmpX
+  
+		for(int k=2;k<(yyvsp[-1].valTab).size+1;k++){
+			generer_Quadruplet("+",(yyvsp[-1].valTab).vals[k],moy,moy);  
+		}
 
-			struct Stack stack; 
-			stack.top = -1; 
-
-			char str1[7];
-			sprintf(str1, "tmp%d", temp_var);    
-			//strcat(str1,str);
-			temp_var++;
-			char *src1=pop();push_pile(src1,&stack);//garder dans la pile local
-			char *src2=pop();push_pile(src2,&stack);
-			generer_Quadruplet("+",src1,src2,str1);  
-			push(str1);
+      char str[7];
+      sprintf(str, "%d", (yyvsp[-1].valTab).size+1); 
+      generer_Quadruplet("/",moy,str,moy);  
 
 
-			for(int k=0;k<(yyvsp[-1].size)-1;k++){
+//************************somme diff carre************************//
 
-				src1=pop();
-				src2=pop();push_pile(src2,&stack);
-				generer_Quadruplet("+",src1,src2,src1);  
-				push(src1);
+      char src2[7],src1[7],r[7];
+      sprintf(r, "tmp%d", temp_var);    
+      temp_var++;
+      sprintf(src1, "tmp%d", temp_var);    
+      temp_var++;
+      sprintf(src2, "tmp%d", temp_var);    
+      temp_var++;
 
-			}
-
-			sprintf(str1, "%d", (yyvsp[-1].size)+1); 
-			char *moyTmp=pop();
-			generer_Quadruplet("/",moyTmp,str1,moyTmp);  
-			//push(src1);
-
-
-			//print local stack 
-			printf("\n\nlocal stack ");
-			for(int i=0;i<stack.top+1;i++){
-				printf("\n %s",stack.items[i]);
-			}
+      generer_Quadruplet("-",moy,(yyvsp[-1].valTab).vals[0],src1);  //diff avec moy
+      generer_Quadruplet("*",src1,src1,src1);  //carre
+      generer_Quadruplet("-",moy,(yyvsp[-1].valTab).vals[1],r);  //diff avec moy
+      generer_Quadruplet("*",r,r,r);  //carre
+      generer_Quadruplet("+",src1,r,src2);  //somme des diff carre
 
 
-//************************somme diff carre************************
+      for(int i=2;i<(yyvsp[-1].valTab).size+1;i++){
+        generer_Quadruplet("-",moy,(yyvsp[-1].valTab).vals[i],(yyvsp[-1].valTab).vals[i]);  //diff avec moy
+        generer_Quadruplet("*",(yyvsp[-1].valTab).vals[i],(yyvsp[-1].valTab).vals[i],(yyvsp[-1].valTab).vals[i]);  //carre
+        generer_Quadruplet("+",(yyvsp[-1].valTab).vals[i],src2,src2);  //somme des diff carre
+      }
 
-			char r[7];
-			sprintf(r, "tmp%d", temp_var);    
-			temp_var++;
-			sprintf(src1, "tmp%d", temp_var);    
-			temp_var++;
-			sprintf(src2, "tmp%d", temp_var);    //tmp somme diff carre 
-			temp_var++;
+      generer_Quadruplet("/",src2,str,src2);  //division (de somme des diff carre) sur n
 
-			generer_Quadruplet("-",moyTmp,pop_pile(&stack),src1);  //diff avec moy
-			generer_Quadruplet("*",src1,src1,src1);  //carre
-			generer_Quadruplet("-",moyTmp,pop_pile(&stack),r);  //diff avec moy
-			generer_Quadruplet("*",r,r,r);  //carre
-			generer_Quadruplet("+",src1,r,src2);  //somme des diff carre
+      /**** scr2 contient la variance , utilisant l algo d babylonian pour recuperér la racin carre**/
+      /*********
+      const double epsilon = 0.0001;
+      double guess = (double)n / 2.0;
+      double r = 0.0;
+      while( fabs(guess * guess - (double)n) > epsilon )
+      {
+          r = (double)n / guess;
+          guess = (guess + r) / 2.0;
+      }
+      ***********/
 
+      char guess[7],str1[7];
+      sprintf(guess, "tmp%d", temp_var);    
+      temp_var++;
+      sprintf(r, "tmp%d", temp_var);    
+      temp_var++;
 
-			//the first two element 
+      generer_Quadruplet("/",src2,"2",guess);//guess = var / 2;
 
-			for(int i=2;i<(yyvsp[-1].size)+1;i++){
-				sprintf(src1, "tmp%d", temp_var);    
-				temp_var++;
-				//src1 = ;
-				//printf("\n\n%s ----  %s %d\n",src1,stack.items[i],stack.top);
-				generer_Quadruplet("-",moyTmp,pop_pile(&stack),src1);  //diff avec moy
-				generer_Quadruplet("*",src1,src1,src1);  //carre
-				generer_Quadruplet("+",src1,src2,src2);  //somme des diff carre
-			}
+      int jumpToBeforeCondAdd = Index;
 
-			generer_Quadruplet("/",src2,str1,src2);  //division (de somme des diff carre) sur n
+      /*** start QUADs cond fabs(guess * guess - (double)n) > epsilon ***/
+      sprintf(src1, "tmp%d", temp_var);    
+      temp_var++;
+      generer_Quadruplet("*",guess,guess,src1);
+      generer_Quadruplet("-",src1,src2,src1);
+      generer_Quadruplet("ABS",src1,"",src1);
+      generer_Quadruplet("CMP",src1,"0.0001",""); //epsilon = 0.0001 c est erreur 
+      int jlAddToBeModified = Index;
+      generer_Quadruplet("JL","","","");  //jump less out of (after) the insts block ----->
+      /*** end cond ***/
 
-			/**** scr2 contient la variance , utilisant l algo d babylonian pour recuperér la racin carre**/
-			/*********
-			const double epsilon = 0.0001;
-			double guess = (double)n / 2.0;
-			double r = 0.0;
-			while( fabs(guess * guess - (double)n) > epsilon )
-			{
-			    r = (double)n / guess;
-			    guess = (guess + r) / 2.0;
-			}
-			***********/
+      /*** start QUADs loop inst ***/
+      generer_Quadruplet("/",src2,guess,r);//r = (double)n / guess;
+      generer_Quadruplet("+",guess,r,r); //r = (guess + r)
+      generer_Quadruplet("/",r,"2",guess);//guess = r / 2.0;
+      sprintf(str1, "@%d", jumpToBeforeCondAdd);          
+      generer_Quadruplet("JMP",str1,"","");
+      /*** end QUADs loop inst ***/
 
-			char guess[7];
-			sprintf(guess, "tmp%d", temp_var);    
-			temp_var++;
-			sprintf(r, "tmp%d", temp_var);    
-			temp_var++;
+      //MAJ ADD OF THE JL INST
+      sprintf(str1, "@%d", Index);    
+      strcpy(QUAD[jlAddToBeModified].src1,str1);
 
-			generer_Quadruplet("/",src2,"2",guess);//guess = var / 2;
-
-			int jumpToBeforeCondAdd = Index;
-
-			/*** start QUADs cond fabs(guess * guess - (double)n) > epsilon ***/
-			sprintf(src1, "tmp%d", temp_var);    
-			temp_var++;
-			generer_Quadruplet("*",guess,guess,src1);
-			generer_Quadruplet("-",src1,src2,src1);
-			generer_Quadruplet("ABS",src1,"",src1);
-			generer_Quadruplet("CMP",src1,"0.0001",""); //epsilon = 0.0001 c est erreur 
-			int jlAddToBeModified = Index;
-			generer_Quadruplet("JL","","","");  //jump less out of (after) the insts block ----->
-			/*** end cond ***/
-
-			/*** start QUADs loop inst ***/
-			generer_Quadruplet("/",src2,guess,r);//r = (double)n / guess;
-			generer_Quadruplet("+",guess,r,r); //r = (guess + r)
-			generer_Quadruplet("/",r,"2",guess);//guess = r / 2.0;
-			sprintf(str1, "@%d", jumpToBeforeCondAdd);    			
-			generer_Quadruplet("JMP",str1,"","");
-			/*** end QUADs loop inst ***/
-
-			//MAJ ADD OF THE JL INST
-			sprintf(str1, "@%d", Index);    
-			strcpy(QUAD[jlAddToBeModified].src1,str1);
-
-			push(guess);//le resultat (ecart-type) est mise dans la pile pour que l imbrication avec d autre function marche
+      strcpy((yyval.string),guess);//le resultat (ecart-type) est mise dans la pile pour que l imbrication avec d autre function marche
 
 
-	}//else (tmp ou nombre) ya93ad f stack
-
-
-
+  	}else{
+		strcpy((yyval.string),"0");//var(x) = 0
+	}
 
 }
-#line 1647 "a.tab.c" /* yacc.c:1646  */
+#line 1559 "a.tab.c" /* yacc.c:1646  */
     break;
 
   case 17:
-#line 374 "a.y" /* yacc.c:1646  */
+#line 291 "a.y" /* yacc.c:1646  */
     {
-
-/*char str[7],str1[7]="tmp";
-	sprintf(str, "%d", temp_var-1);    
-	strcat(str1,str);
-
-	//generer_Quadruplet(op,pop(),pop(),str1);  
-	push(str1);*/
-
-	/*printf("bfffLIST : %f  size: %d\n",$3,$$.size);
-	$$.vals[$$.size] = $3; 
-	$$.size++;*/
-//	printf("AdddLIST : %f size: %d vallist %f\n\n",$3,$$.size,$$.vals[0]); 
-(yyval.size)++;
+	(yyval.valTab).size++;
+	strcpy((yyval.valTab).vals[(yyval.valTab).size],(yyvsp[0].string));
  }
-#line 1667 "a.tab.c" /* yacc.c:1646  */
+#line 1568 "a.tab.c" /* yacc.c:1646  */
     break;
 
   case 18:
-#line 389 "a.y" /* yacc.c:1646  */
+#line 295 "a.y" /* yacc.c:1646  */
     { 
-(yyval.size) = 0;
-	/*char str[7],str1[7]="tmp";
-	sprintf(str, "%d", temp_var-1);    
-	strcat(str1,str);
-
-	//generer_Quadruplet(op,pop(),pop(),str1);  
-	push(str1);*/
-/*	printf("Bfff : %f  size: %d\n",$1,$$.size);
-	$$.vals[$$.size] = $1; 
-	$$.size++;*/
-//	printf("Addd : %f size: %d\n\n",$1,$$.size);
+	(yyval.valTab).size = 0;
+	strcpy((yyval.valTab).vals[0],(yyvsp[0].string));
  }
-#line 1685 "a.tab.c" /* yacc.c:1646  */
+#line 1577 "a.tab.c" /* yacc.c:1646  */
     break;
 
 
-#line 1689 "a.tab.c" /* yacc.c:1646  */
+#line 1581 "a.tab.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1913,7 +1805,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 404 "a.y" /* yacc.c:1906  */
+#line 301 "a.y" /* yacc.c:1906  */
 
 
 int yyerror(char *s) {
@@ -1921,7 +1813,6 @@ printf("%s\n",s);
 }
 
 int main(void) {
-	Stk.top = -1;
 
 	yyparse();
 
@@ -1932,13 +1823,10 @@ int main(void) {
 	printf("\n\n");*/
 }
 
-void traiter(char op[5]){
-	char str[7];
-	sprintf(str, "tmp%d", temp_var);    
-	//strcat(str1,str);
+void traiter(char op[5],char *src1,char *src2,char *dest){
+	sprintf(dest, "tmp%d", temp_var);    
 	temp_var++;
-	generer_Quadruplet(op,pop(),pop(),str);  
-	push(str);
+	generer_Quadruplet(op,src1,src2,dest);  
 }
 
 void afficher_Quadruplet()
@@ -1960,7 +1848,7 @@ void afficher_simplifie()
 	printf("\n %d     %s   :=       %s          %s          %s",i,QUAD[i].dest ,QUAD[i].src1,QUAD[i].code_op ,QUAD[i].src2);
 }
 
-
+/*
 void push(char *str)
 {
 	Stk.top++;
@@ -1998,7 +1886,7 @@ char * pop_pile(struct Stack *stack)
 	strcpy(str,(*stack).items[(*stack).top]);
 	(*stack).top--;
 	return(str);
-}
+}*/
 void generer_Quadruplet(char op[5],char op1[10],char op2[10],char res[10]){
                                         strcpy(QUAD[Index].code_op,op);
                                         strcpy(QUAD[Index].src1,op1);

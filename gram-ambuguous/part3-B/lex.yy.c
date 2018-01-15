@@ -766,61 +766,65 @@ case 2:
 YY_RULE_SETUP
 #line 21 "a.l"
 {
-      yylval.val =atoi(yytext);
+      //yylval.val =atoi(yytext);
+      	strcpy(yylval.string,yytext);
+
       return(NOMBRE);
     }
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 26 "a.l"
+#line 28 "a.l"
 {
-      yylval.val =atof(yytext);
+      //yylval.val =atof(yytext);
+       	strcpy(yylval.string,yytext);
+
       return(NOMBRE);
     }
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 31 "a.l"
+#line 35 "a.l"
 return(MOY);
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 33 "a.l"
+#line 37 "a.l"
 return(VARIANCE);
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 35 "a.l"
+#line 39 "a.l"
 return(ECARTTYPE);
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 37 "a.l"
+#line 41 "a.l"
 return(MIN);
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 39 "a.l"
+#line 43 "a.l"
 return(MAX);
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 41 "a.l"
+#line 45 "a.l"
 return(SOMME);
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 43 "a.l"
+#line 47 "a.l"
 return(SI);
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 45 "a.l"
+#line 49 "a.l"
 return(PRODUIT);
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 47 "a.l"
+#line 51 "a.l"
 {
 	strcpy(yylval.string,yytext);
 	return ID; 
@@ -829,15 +833,15 @@ YY_RULE_SETUP
 case 13:
 /* rule 13 can match eol */
 YY_RULE_SETUP
-#line 52 "a.l"
+#line 56 "a.l"
 return(yytext[0]);
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 53 "a.l"
+#line 57 "a.l"
 ECHO;
 	YY_BREAK
-#line 841 "lex.yy.c"
+#line 845 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1832,4 +1836,4 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 52 "a.l"
+#line 56 "a.l"

@@ -19,12 +19,16 @@ reel	  {entier}\.{entier}
 {blancs}  { /* On ignore */ }
 
 {entier}    {
-      yylval.val =atoi(yytext);
+      //yylval.val =atoi(yytext);
+      	strcpy(yylval.string,yytext);
+
       return(NOMBRE);
     }
 
 {reel}    {
-      yylval.val =atof(yytext);
+      //yylval.val =atof(yytext);
+       	strcpy(yylval.string,yytext);
+
       return(NOMBRE);
     }
 

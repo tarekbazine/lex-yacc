@@ -45,8 +45,8 @@ extern int yydebug;
 # define YYTOKENTYPE
   enum yytokentype
   {
-    NOMBRE = 258,
-    ID = 259,
+    ID = 258,
+    NOMBRE = 259,
     MOY = 260,
     VARIANCE = 261,
     MIN = 262,
@@ -64,17 +64,15 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 35 "a.y" /* yacc.c:1909  */
+#line 33 "a.y" /* yacc.c:1909  */
 
 	struct valTab{
-		float vals[100];
+		char vals[20][10];
 		int size;
 	} valTab;  
-	float  val;
-        char string[10];
-	int size;
+    char string[10];
 
-#line 78 "a.tab.h" /* yacc.c:1909  */
+#line 76 "a.tab.h" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;

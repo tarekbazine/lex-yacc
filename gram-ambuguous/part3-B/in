@@ -1,1 +1,11 @@
 som(var(a,b,moy(1,2,3)),som(3,2))
+
+a+b*som(c,som(d,e,f),var(a,b,c,d,e))
+
+som(moy(a,b,som(v,b)),ff)
+
+som(prod(moy(a,b,som(v,b)),ff),prod(tt,uu))
+
+var(som(var(d),dg),kl,moy(var(h,k),o))
+
+som(ecrt(d,dg),kl,moy(var(h,k),o))
